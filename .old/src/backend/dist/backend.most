@@ -1,0 +1,413 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type Chapter__710360680 =
+  {id : Nat; notebookId : NotebookId__843206494; order : Nat; title : Text};
+type Chapter__770256358 =
+  {id : Nat; notebookId : NotebookId__205643691; order : Nat; title : Text};
+type Citation__700767326 =
+  {snippet : Text; sourceId : SourceId__1013024384; sourceTitle : Text};
+type Citation__788453021 = Citation__700767326;
+type ConversationId__147913217 = ConversationId__966455625;
+type ConversationId__20411913 = Nat;
+type ConversationId__966455625 = Nat;
+type Conversation__638035150 =
+  {
+    createdAt : Int;
+    id : ConversationId__20411913;
+    notebookId : NotebookId__843206494;
+    owner : Principal;
+    title : Text;
+    updatedAt : Int
+  };
+type Conversation__686238356 =
+  {
+    createdAt : Timestamp__753029554;
+    id : ConversationId__147913217;
+    notebookId : NotebookId__419914806;
+    owner : UserId__1023572875;
+    title : Text;
+    updatedAt : Timestamp__753029554
+  };
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type Difficulty__38521246 = Difficulty__971497521;
+type Difficulty__971497521 = {#advanced; #beginner; #exam; #intermediate};
+type FlashcardId__210251380 = Nat;
+type FlashcardId__52264078 = Nat;
+type FlashcardId__72602417 = FlashcardId__52264078;
+type Flashcard__437354857 =
+  {
+    back : Text;
+    createdAt : Int;
+    front : Text;
+    id : FlashcardId__210251380;
+    knownCount : Nat;
+    lastReviewedAt : ?Int;
+    notebookId : NotebookId__843206494;
+    owner : Principal;
+    reviewCount : Nat
+  };
+type Flashcard__718826996 =
+  {
+    back : Text;
+    createdAt : Timestamp__51509278;
+    front : Text;
+    id : FlashcardId__72602417;
+    knownCount : Nat;
+    lastReviewedAt : ?Timestamp__51509278;
+    notebookId : NotebookId__372949297;
+    owner : UserId__93508735;
+    reviewCount : Nat
+  };
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type MessageId__291319400 = Nat;
+type MessageId__810287564 = MessageId__291319400;
+type MessageRole__512297421 = {#assistant; #user};
+type Message__358084610 =
+  {
+    citations :
+      [{snippet : Text; sourceId : SourceId__199685797; sourceTitle : Text}];
+    content : Text;
+    conversationId : ConversationId__20411913;
+    createdAt : Int;
+    id : Nat;
+    notebookId : NotebookId__843206494;
+    owner : Principal;
+    role : {#assistant; #user}
+  };
+type Message__454780518 =
+  {
+    citations : [Citation__788453021];
+    content : Text;
+    conversationId : ConversationId__147913217;
+    createdAt : Timestamp__753029554;
+    id : MessageId__810287564;
+    notebookId : NotebookId__419914806;
+    owner : UserId__1023572875;
+    role : MessageRole__512297421
+  };
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__248761742 =
+  {
+    accessControlState : AccessControlState__201339279;
+    chapters : Map__230067015<NotebookId__843206494, [Chapter__710360680]>;
+    chunks : Map__230067015<SourceId__199685797, [SourceChunk__1008251796]>;
+    conversations :
+      Map__230067015<ConversationId__20411913, Conversation__638035150>;
+    counters :
+      {
+        var nextChunkId : Nat;
+        var nextConversationId : Nat;
+        var nextFlashcardId : Nat;
+        var nextMessageId : Nat;
+        var nextNoteId : Nat;
+        var nextNotebookId : Nat;
+        var nextQuestionId : Nat;
+        var nextQuizId : Nat;
+        var nextSourceId : Nat
+      };
+    flashcards : Map__230067015<FlashcardId__210251380, Flashcard__437354857>;
+    messages : Map__230067015<ConversationId__20411913, [Message__358084610]>;
+    notebooks : Map__230067015<NotebookId__843206494, Notebook__312043332>;
+    notes : Map__230067015<NoteId__35479517, Note__330485703>;
+    progress :
+      Map__230067015<NotebookId__843206494, StudyProgress__783398186>;
+    questions : Map__230067015<QuizId__936331026, [QuizQuestion__544285323]>;
+    quizzes : Map__230067015<QuizId__936331026, Quiz__950610504>;
+    sources : Map__230067015<SourceId__199685797, Source__963350162>
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type NoteId__1031432077 = NoteId__167160349;
+type NoteId__167160349 = Nat;
+type NoteId__35479517 = Nat;
+type Note__1001466320 =
+  {
+    content : Text;
+    createdAt : Timestamp__51509278;
+    difficulty : Difficulty__38521246;
+    id : NoteId__1031432077;
+    kind : StudyMaterialKind__842692587;
+    notebookId : NotebookId__372949297;
+    owner : UserId__93508735;
+    title : Text;
+    updatedAt : Timestamp__51509278
+  };
+type Note__330485703 =
+  {
+    content : Text;
+    createdAt : Int;
+    difficulty : {#advanced; #beginner; #exam; #intermediate};
+    id : NoteId__35479517;
+    kind : {#detailedNotes; #flashcards; #quiz; #summary};
+    notebookId : NotebookId__843206494;
+    owner : Principal;
+    title : Text;
+    updatedAt : Int
+  };
+type NotebookId__205643691 = NotebookId__471166471;
+type NotebookId__372949297 = NotebookId__471166471;
+type NotebookId__419914806 = NotebookId__471166471;
+type NotebookId__471166471 = Nat;
+type NotebookId__773440887 = NotebookId__471166471;
+type NotebookId__843206494 = Nat;
+type Notebook__312043332 =
+  {
+    createdAt : Int;
+    description : Text;
+    id : NotebookId__843206494;
+    owner : Principal;
+    title : Text;
+    updatedAt : Int
+  };
+type Notebook__950582800 =
+  {
+    createdAt : Timestamp__1056444437;
+    description : Text;
+    id : NotebookId__205643691;
+    owner : UserId__81957185;
+    title : Text;
+    updatedAt : Timestamp__1056444437
+  };
+type ProgressId__398287303 = Nat;
+type ProgressId__913103783 = ProgressId__398287303;
+type QuestionId__77764146 = Nat;
+type QuestionId__956516449 = QuestionId__77764146;
+type QuestionKind__829700786 = {#mcq; #shortAnswer; #trueFalse};
+type QuestionKind__916819600 = QuestionKind__829700786;
+type QuizDifficulty__182437642 = {#easy; #hard; #medium};
+type QuizDifficulty__68276434 = QuizDifficulty__182437642;
+type QuizId__438791917 = Nat;
+type QuizId__897443203 = QuizId__438791917;
+type QuizId__936331026 = Nat;
+type QuizQuestion__544285323 =
+  {
+    correctIndex : Nat;
+    explanation : Text;
+    id : Nat;
+    kind : {#mcq; #shortAnswer; #trueFalse};
+    options : [Text];
+    owner : Principal;
+    prompt : Text;
+    quizId : QuizId__936331026;
+    topic : Text
+  };
+type QuizQuestion__574911870 =
+  {
+    correctIndex : Nat;
+    explanation : Text;
+    id : QuestionId__956516449;
+    kind : QuestionKind__916819600;
+    options : [Text];
+    owner : UserId__93508735;
+    prompt : Text;
+    quizId : QuizId__897443203;
+    topic : Text
+  };
+type Quiz__848479299 =
+  {
+    createdAt : Timestamp__51509278;
+    difficulty : QuizDifficulty__68276434;
+    id : QuizId__897443203;
+    notebookId : NotebookId__372949297;
+    owner : UserId__93508735;
+    title : Text
+  };
+type Quiz__950610504 =
+  {
+    createdAt : Int;
+    difficulty : {#easy; #hard; #medium};
+    id : QuizId__936331026;
+    notebookId : NotebookId__843206494;
+    owner : Principal;
+    title : Text
+  };
+type SourceChunk__1008251796 =
+  {
+    id : Nat;
+    notebookId : NotebookId__843206494;
+    ordinal : Nat;
+    owner : Principal;
+    sourceId : SourceId__199685797;
+    text : Text
+  };
+type SourceChunk__917966569 =
+  {
+    id : Nat;
+    notebookId : NotebookId__773440887;
+    ordinal : Nat;
+    owner : UserId__313573228;
+    sourceId : SourceId__744054056;
+    text : Text
+  };
+type SourceId__1013024384 = Nat;
+type SourceId__199685797 = Nat;
+type SourceId__744054056 = SourceId__1013024384;
+type SourceKind__1019288131 =
+  {#docx; #note; #pdf; #pptx; #text; #url; #youtube};
+type SourceKind__175737246 = SourceKind__1019288131;
+type SourceStatus__961264085 = SourceStatus__994956509;
+type SourceStatus__994956509 = {#failed; #pending; #processing; #ready};
+type Source__13919276 =
+  {
+    content : Text;
+    createdAt : Timestamp__385148286;
+    errorMessage : Text;
+    id : SourceId__744054056;
+    kind : SourceKind__175737246;
+    notebookId : NotebookId__773440887;
+    owner : UserId__313573228;
+    pageCount : Nat;
+    sizeBytes : Nat;
+    status : SourceStatus__961264085;
+    storageKey : Text;
+    title : Text;
+    updatedAt : Timestamp__385148286;
+    url : Text
+  };
+type Source__963350162 =
+  {
+    content : Text;
+    createdAt : Int;
+    errorMessage : Text;
+    id : SourceId__199685797;
+    kind : {#docx; #note; #pdf; #pptx; #text; #url; #youtube};
+    notebookId : NotebookId__843206494;
+    owner : Principal;
+    pageCount : Nat;
+    sizeBytes : Nat;
+    status : {#failed; #pending; #processing; #ready};
+    storageKey : Text;
+    title : Text;
+    updatedAt : Int;
+    url : Text
+  };
+type StudyMaterialKind__842692587 = StudyMaterialKind__934586741;
+type StudyMaterialKind__934586741 =
+  {#detailedNotes; #flashcards; #quiz; #summary};
+type StudyProgress__783398186 =
+  {
+    flashcardsReviewed : Nat;
+    id : Nat;
+    lastActivityAt : Int;
+    notebookId : NotebookId__843206494;
+    notesGenerated : Nat;
+    owner : Principal;
+    questionsAnswered : Nat;
+    questionsCorrect : Nat;
+    quizzesTaken : Nat
+  };
+type StudyProgress__939400308 =
+  {
+    flashcardsReviewed : Nat;
+    id : ProgressId__913103783;
+    lastActivityAt : Timestamp__51509278;
+    notebookId : NotebookId__372949297;
+    notesGenerated : Nat;
+    owner : UserId__93508735;
+    questionsAnswered : Nat;
+    questionsCorrect : Nat;
+    quizzesTaken : Nat
+  };
+type Timestamp__1056444437 = Timestamp__301639476;
+type Timestamp__301639476 = Int;
+type Timestamp__385148286 = Timestamp__301639476;
+type Timestamp__51509278 = Timestamp__301639476;
+type Timestamp__753029554 = Timestamp__301639476;
+type UserId__1023572875 = UserId__158757552;
+type UserId__158757552 = Principal;
+type UserId__313573228 = UserId__158757552;
+type UserId__81957185 = UserId__158757552;
+type UserId__93508735 = UserId__158757552;
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20260920_000000" : (_old : {}) -> NewActor__248761742
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable chapters :
+    {
+      var root : Node__204828119<NotebookId__471166471, [Chapter__770256358]>;
+      var size : Nat__227979830
+    };
+  stable chunks :
+    {
+      var root :
+        Node__204828119<SourceId__1013024384, [SourceChunk__917966569]>;
+      var size : Nat__227979830
+    };
+  stable conversations :
+    {
+      var root :
+        Node__204828119<ConversationId__966455625, Conversation__686238356>;
+      var size : Nat__227979830
+    };
+  stable counters :
+    {
+      var nextChunkId : Nat;
+      var nextConversationId : Nat;
+      var nextFlashcardId : Nat;
+      var nextMessageId : Nat;
+      var nextNoteId : Nat;
+      var nextNotebookId : Nat;
+      var nextQuestionId : Nat;
+      var nextQuizId : Nat;
+      var nextSourceId : Nat
+    };
+  stable flashcards :
+    {
+      var root : Node__204828119<FlashcardId__52264078, Flashcard__718826996>;
+      var size : Nat__227979830
+    };
+  stable messages :
+    {
+      var root :
+        Node__204828119<ConversationId__966455625, [Message__454780518]>;
+      var size : Nat__227979830
+    };
+  stable notebooks :
+    {
+      var root : Node__204828119<NotebookId__471166471, Notebook__950582800>;
+      var size : Nat__227979830
+    };
+  stable notes :
+    {
+      var root : Node__204828119<NoteId__167160349, Note__1001466320>;
+      var size : Nat__227979830
+    };
+  stable progress :
+    {
+      var root :
+        Node__204828119<NotebookId__471166471, StudyProgress__939400308>;
+      var size : Nat__227979830
+    };
+  stable questions :
+    {
+      var root : Node__204828119<QuizId__438791917, [QuizQuestion__574911870]>;
+      var size : Nat__227979830
+    };
+  stable quizzes :
+    {
+      var root : Node__204828119<QuizId__438791917, Quiz__848479299>;
+      var size : Nat__227979830
+    };
+  stable sources :
+    {
+      var root : Node__204828119<SourceId__1013024384, Source__13919276>;
+      var size : Nat__227979830
+    }
+};

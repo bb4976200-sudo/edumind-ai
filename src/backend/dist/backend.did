@@ -1,0 +1,453 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserId = principal;
+type Timestamp = int;
+type StudyProgress = 
+ record {
+   flashcardsReviewed: nat;
+   id: ProgressId;
+   lastActivityAt: Timestamp;
+   notebookId: NotebookId;
+   notesGenerated: nat;
+   owner: UserId;
+   questionsAnswered: nat;
+   questionsCorrect: nat;
+   quizzesTaken: nat;
+ };
+type StudyMaterialKind = 
+ variant {
+   detailedNotes;
+   flashcards;
+   quiz;
+   summary;
+ };
+type SourceSummary = 
+ record {
+   chunkCount: nat;
+   source: Source;
+ };
+type SourceStatus = 
+ variant {
+   failed;
+   pending;
+   processing;
+   ready;
+ };
+type SourceKind = 
+ variant {
+   docx;
+   note;
+   pdf;
+   pptx;
+   "text";
+   url;
+   youtube;
+ };
+type SourceInput = 
+ record {
+   content: text;
+   kind: SourceKind;
+   notebookId: NotebookId;
+   sizeBytes: nat;
+   storageKey: text;
+   title: text;
+   url: text;
+ };
+type SourceId = nat;
+type Source = 
+ record {
+   content: text;
+   createdAt: Timestamp;
+   errorMessage: text;
+   id: SourceId;
+   kind: SourceKind;
+   notebookId: NotebookId;
+   owner: UserId;
+   pageCount: nat;
+   sizeBytes: nat;
+   status: SourceStatus;
+   storageKey: text;
+   title: text;
+   updatedAt: Timestamp;
+   url: text;
+ };
+type SearchHit = 
+ record {
+   id: nat;
+   kind: text;
+   notebookId: NotebookId;
+   snippet: text;
+   title: text;
+ };
+type Result__2 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result__1 = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Result_6 = 
+ variant {
+   err: AppError;
+   ok: Answer;
+ };
+type Result_5 = 
+ variant {
+   err: AppError;
+   ok: Conversation;
+ };
+type Result_4 = 
+ variant {
+   err: AppError;
+   ok: vec Flashcard;
+ };
+type Result_3 = 
+ variant {
+   err: AppError;
+   ok: Note;
+ };
+type Result_2 = 
+ variant {
+   err: AppError;
+   ok: Quiz;
+ };
+type Result_1 = 
+ variant {
+   err: AppError;
+   ok: Source;
+ };
+type Result = 
+ variant {
+   err: AppError;
+   ok: QuizResult;
+ };
+type QuizResultItem = 
+ record {
+   correct: bool;
+   correctIndex: nat;
+   explanation: text;
+   prompt: text;
+   questionId: QuestionId;
+   selectedIndex: nat;
+   topic: text;
+ };
+type QuizResult = 
+ record {
+   correctCount: nat;
+   items: vec QuizResultItem;
+   quizId: QuizId;
+   recommendedRevision: vec text;
+   score: nat;
+   total: nat;
+   weakTopics: vec text;
+   wrongCount: nat;
+ };
+type QuizRequest = 
+ record {
+   count: nat;
+   difficulty: QuizDifficulty;
+   kinds: vec QuestionKind;
+   notebookId: NotebookId;
+   sourceId: opt SourceId;
+ };
+type QuizQuestionView = 
+ record {
+   id: QuestionId;
+   kind: QuestionKind;
+   options: vec text;
+   prompt: text;
+   topic: text;
+ };
+type QuizId = nat;
+type QuizDifficulty = 
+ variant {
+   easy;
+   hard;
+   medium;
+ };
+type QuizAnswer = 
+ record {
+   questionId: QuestionId;
+   selectedIndex: nat;
+ };
+type Quiz = 
+ record {
+   createdAt: Timestamp;
+   difficulty: QuizDifficulty;
+   id: QuizId;
+   notebookId: NotebookId;
+   owner: UserId;
+   title: text;
+ };
+type QuestionKind = 
+ variant {
+   mcq;
+   shortAnswer;
+   trueFalse;
+ };
+type QuestionId = nat;
+type ProgressId = nat;
+type NotebookUpdate = 
+ record {
+   description: opt text;
+   title: opt text;
+ };
+type NotebookSummary = 
+ record {
+   conversationCount: nat;
+   flashcardCount: nat;
+   noteCount: nat;
+   notebook: Notebook;
+   quizCount: nat;
+   sourceCount: nat;
+ };
+type NotebookInput = 
+ record {
+   description: text;
+   title: text;
+ };
+type NotebookId = nat;
+type Notebook = 
+ record {
+   createdAt: Timestamp;
+   description: text;
+   id: NotebookId;
+   owner: UserId;
+   title: text;
+   updatedAt: Timestamp;
+ };
+type NoteRequest = 
+ record {
+   chapter: opt text;
+   difficulty: Difficulty;
+   kind: StudyMaterialKind;
+   notebookId: NotebookId;
+   sourceId: opt SourceId;
+ };
+type NoteId = nat;
+type Note = 
+ record {
+   content: text;
+   createdAt: Timestamp;
+   difficulty: Difficulty;
+   id: NoteId;
+   kind: StudyMaterialKind;
+   notebookId: NotebookId;
+   owner: UserId;
+   title: text;
+   updatedAt: Timestamp;
+ };
+type MessageRole = 
+ variant {
+   assistant;
+   user;
+ };
+type MessageId = nat;
+type Message = 
+ record {
+   citations: vec Citation;
+   content: text;
+   conversationId: ConversationId;
+   createdAt: Timestamp;
+   id: MessageId;
+   notebookId: NotebookId;
+   owner: UserId;
+   role: MessageRole;
+ };
+type FlashcardRequest = 
+ record {
+   count: nat;
+   difficulty: Difficulty;
+   notebookId: NotebookId;
+   sourceId: opt SourceId;
+ };
+type FlashcardId = nat;
+type Flashcard = 
+ record {
+   back: text;
+   createdAt: Timestamp;
+   front: text;
+   id: FlashcardId;
+   knownCount: nat;
+   lastReviewedAt: opt Timestamp;
+   notebookId: NotebookId;
+   owner: UserId;
+   reviewCount: nat;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Difficulty = 
+ variant {
+   advanced;
+   beginner;
+   exam;
+   intermediate;
+ };
+type ConversationSummary = 
+ record {
+   conversation: Conversation;
+   messageCount: nat;
+ };
+type ConversationId = nat;
+type Conversation = 
+ record {
+   createdAt: Timestamp;
+   id: ConversationId;
+   notebookId: NotebookId;
+   owner: UserId;
+   title: text;
+   updatedAt: Timestamp;
+ };
+type Citation = 
+ record {
+   snippet: text;
+   sourceId: SourceId;
+   sourceTitle: text;
+ };
+type Chapter = 
+ record {
+   id: nat;
+   notebookId: NotebookId;
+   order: nat;
+   title: text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type AppError = 
+ variant {
+   engineUnavailable: text;
+   invalidInput: text;
+   notAuthorized;
+   notFound: text;
+   sourceTooLarge: text;
+   unsupportedSourceKind: text;
+ };
+type Answer = 
+ record {
+   assistantMessage: Message;
+   conversationId: ConversationId;
+   userMessage: Message;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__2);
+  _internet_identity_sign_in_start: () -> (blob);
+  /// Add a source to one of the caller's notebooks.
+  addSource: (input: SourceInput) -> (Result_1);
+  /// Ask a question grounded in the notebook's sources.
+  askQuestion: (conversationId: ConversationId, question: text) -> (Result_6);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Start a conversation inside one of the caller's notebooks.
+  createConversation: (notebookId: NotebookId, title: text) -> (Result_5);
+  /// Create a notebook owned by the caller.
+  createNotebook: (input: NotebookInput) -> (Notebook);
+  /// Delete one of the caller's conversations and its messages.
+  deleteConversation: (id: ConversationId) -> (bool);
+  /// Delete one of the caller's notes.
+  deleteNote: (id: NoteId) -> (bool);
+  /// Delete one of the caller's notebooks and all data scoped to it.
+  deleteNotebook: (id: NotebookId) -> (bool);
+  /// Delete one of the caller's sources and its chunks.
+  deleteSource: (id: SourceId) -> (bool);
+  execute: (qJson: text) -> (Result__1) query;
+  /// Generate flashcards for one of the caller's notebooks.
+  generateFlashcards: (request: FlashcardRequest) -> (Result_4);
+  /// Generate a note document for one of the caller's notebooks.
+  generateNote: (request: NoteRequest) -> (Result_3);
+  /// Generate a quiz for one of the caller's notebooks.
+  generateQuiz: (request: QuizRequest) -> (Result_2);
+  /// Static Markdown documentation of this backend's public API.
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Fetch one of the caller's conversations.
+  getConversation: (id: ConversationId) -> (opt Conversation) query;
+  /// Fetch one of the caller's notes.
+  getNote: (id: NoteId) -> (opt Note) query;
+  /// Fetch one of the caller's notebooks.
+  getNotebook: (id: NotebookId) -> (opt Notebook) query;
+  /// Fetch aggregate study progress for one of the caller's notebooks.
+  getProgress: (notebookId: NotebookId) -> (opt StudyProgress) query;
+  /// Fetch one of the caller's quizzes with its questions.
+  getQuiz: (id: QuizId) -> (opt record {
+                                  Quiz;
+                                  vec QuizQuestionView;
+                                }) query;
+  /// Fetch one of the caller's sources.
+  getSource: (id: SourceId) -> (opt Source) query;
+  isCallerAdmin: () -> (bool) query;
+  /// List the chapters of one of the caller's notebooks.
+  listChapters: (notebookId: NotebookId) -> (vec Chapter) query;
+  /// List the conversations of one of the caller's notebooks.
+  listConversations: (notebookId: NotebookId) ->
+   (vec ConversationSummary) query;
+  /// List the flashcards of one of the caller's notebooks.
+  listFlashcards: (notebookId: NotebookId) -> (vec Flashcard) query;
+  /// List the messages of one of the caller's conversations.
+  listMessages: (conversationId: ConversationId) -> (vec Message) query;
+  /// List the caller's notebooks with aggregate counts.
+  listNotebooks: () -> (vec NotebookSummary) query;
+  /// List the notes of one of the caller's notebooks.
+  listNotes: (notebookId: NotebookId) -> (vec Note) query;
+  /// List the quizzes of one of the caller's notebooks.
+  listQuizzes: (notebookId: NotebookId) -> (vec Quiz) query;
+  /// List the sources of one of the caller's notebooks.
+  listSources: (notebookId: NotebookId) -> (vec SourceSummary) query;
+  /// Send a source through the knowledge engine and record its status.
+  processSource: (id: SourceId) -> (Result_1);
+  /// Record a flashcard review outcome.
+  reviewFlashcard: (id: FlashcardId, known: bool) -> (opt Flashcard);
+  schema: () -> (text) query;
+  /// Search the caller's notebooks, sources, notes, flashcards, conversations
+  /// and quizzes.
+  search: (term: text) -> (vec SearchHit) query;
+  /// Seed the Indian Economy demo notebook for the caller if absent, and
+  /// return it.
+  seedDemoData: () -> (Notebook);
+  /// Replace the chapter list of one of the caller's notebooks.
+  setChapters: (notebookId: NotebookId, titles: vec text) -> (vec Chapter);
+  /// Submit answers to one of the caller's quizzes and receive a graded report.
+  submitQuiz: (quizId: QuizId, answers: vec QuizAnswer) -> (Result);
+  /// Update one of the caller's notes.
+  updateNote: (id: NoteId, title: opt text, content: opt text) -> (opt Note);
+  /// Update one of the caller's notebooks.
+  updateNotebook: (id: NotebookId, update: NotebookUpdate) -> (opt Notebook);
+}
